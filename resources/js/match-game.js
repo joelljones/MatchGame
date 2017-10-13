@@ -5,12 +5,21 @@ var MatchGame = {};
   Renders a 4x4 board of cards.
 */
 
+$(document).ready(function() {
+
+});
+
 /*
   Generates and returns an array of matching card values.
  */
 
-MatchGame.generateCardValues = function () {
+var values = [];
+MatchGame.generateCardValues = function() {
+  for (var i = 1; i = 8; i++) {
+    values.push().push();
+  }
 
+  
 };
 
 /*
