@@ -15,11 +15,11 @@ $(document).ready(function() {
 
 var values = [];
 MatchGame.generateCardValues = function() {
-  for (var i = 1; i = 8; i++) {
+  for (var i = 1; i < 9; i++) {
     values.push().push();
   }
 
-  
+
 };
 
 /*
