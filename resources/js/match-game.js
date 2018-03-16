@@ -47,6 +47,7 @@ MatchGame.renderCards = function(cardValues, $game) {
 
   // Empty the $game object's HTML
   $game.empty();
+  // Keeps track of the flipped cards, initialized to an empty array
   $game.data('flippedCards', []);
 
   // Generate jQuery objects for each card, including data about the value, color, and flipped status of each card
@@ -66,14 +67,64 @@ MatchGame.renderCards = function(cardValues, $game) {
     $game.append($cardElement);
   }
 
+  // Call .flipCard() whenever a card is clicked
   $('.card').click(function() {
     MatchGame.flipCard($(this), $('#game'));
   });
+
 };
 
 
 //  Flips over a given card and checks to see if two cards are flipped over.
 //  Updates styles on flipped cards depending whether they are a match or not.
 MatchGame.flipCard = function($card, $game) {
+
+  // Ensure that the card being flipped is not already flipped over
+  if ($card.data('isFlipped')) {
+    return;
+  }
+
+  // Modify the card being flipped so that it appears flipped over
+  // Change the background color of the card to be the color stored on the card
+  $card.css('background-color', $card.data('color'))
+    // Change the text of the card to be the value stored on the card
+    .text($card.data('value'))
+    // Update the data on the card to indicate that it has been flipped over
+    .data('isFlipped', true);
+
+  var flippedCards = $game.data('flippedCards');
+  // Add the newly-flipped card to an array of flipped cards stored on the game object
+  flippedCards.push($card);
+
+  // Check if the game has two flipped cards
+  if (flippedCards.length === 2) {
+    // If two cards are flipped, check to see if they are the same value
+    if (flippedCards[0].data('value') === flippedCards[1].data('value')) {
+      // Gray out the cards if a match is made
+      var matchCss = {
+        backgroundColor: 'rgb(153, 153, 153)',
+        color: 'rgb(204, 204, 204)'
+      };
+      flippedCards[0].css(matchCss);
+      flippedCards[1].css(matchCss);
+    // If the two cards are not a match, flip them back over
+    } else {
+      var card1 = flippedCards[0];
+      var card2 = flippedCards[1];
+
+      // Use .setTimeout() to add a delay to the flip, giving the user time to look at the second card
+      window.setTimeout(function() {
+        // Set the text to an empty string & update the data to reflect that the card has not been flipped over
+        card1.css('background-color', 'rgb(32, 64, 86)')
+          .text('')
+          .data('isFlipped', false);
+        card2.css('background-color', 'rgb(32, 64, 86)')
+          .text('')
+          .data('isFlipped', false);
+      }, 350);
+    }
+    // Clear the game's array of flipped cards to get ready for the next pair
+    $game.data('flippedCards', []);
+  }
 
 };
