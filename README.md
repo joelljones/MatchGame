@@ -1,6 +1,8 @@
 # Match Game
 
-A card matching game that requires using JavaScript logic and jQuery event handlers. The game is structured using the Bootstrap grid system.
+A card-matching game that requires using JavaScript logic and jQuery event handlers.
+
+- HTML, Bootstrap, CSS, JavaScript and jQuery.
 
 ### Design Specs:
 
